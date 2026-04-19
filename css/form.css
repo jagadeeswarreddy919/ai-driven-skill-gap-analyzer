@@ -1,0 +1,339 @@
+/* ─────────────────────────────────────
+   form.css  –  Role select, skill grid,
+                badges, analyze button,
+                loading spinner
+───────────────────────────────────── */
+
+/* ── Role dropdown ── */
+.role-select-wrap {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.role-select-wrap select {
+  width: 100%;
+  padding: 14px 48px 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 0 0 3px rgba(91, 62, 245, 0.08);
+}
+
+.role-select-wrap select:focus {
+  box-shadow: 0 0 0 4px rgba(91, 62, 245, 0.18);
+}
+
+.role-select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  pointer-events: none;
+  font-size: 16px;
+}
+
+/* ── Skills grid ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Skill item ── */
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--surface2);
+  user-select: none;
+}
+
+.skill-item:hover {
+  border-color: var(--accent);
+  background: #ede9ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 62, 245, 0.1);
+}
+
+.skill-item.checked {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #ede9ff, #faf5ff);
+  box-shadow: 0 2px 8px rgba(91, 62, 245, 0.15);
+}
+
+/* ── Custom checkbox ── */
+.skill-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: white;
+}
+
+.skill-item.checked .skill-checkbox {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.skill-checkbox::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.skill-item.checked .skill-checkbox::after {
+  opacity: 1;
+}
+
+.skill-name {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+
+/* ── Badges ── */
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-required    { background: #fff0f0; color: var(--required); }
+.badge-recommended { background: #f3f0ff; color: var(--recommended); }
+.badge-nice        { background: #ecfdf5; color: var(--nice); }
+
+/* ── Analyze button ── */
+.btn-analyze {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.25s;
+  box-shadow: 0 6px 20px rgba(91, 62, 245, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-analyze::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #7c3aed, var(--accent3));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-analyze:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(91, 62, 245, 0.45);
+}
+
+.btn-analyze:hover::before { opacity: 1; }
+
+.btn-analyze span { position: relative; z-index: 1; }
+
+.btn-analyze:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Loading state ── */
+.loading {
+  display: none;
+  text-align: center;
+  padding: 48px 0;
+}
+
+.loading.show { display: block; }
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+.loading-text {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+/* ── Step card header ── */
+.step-card-header {
+  margin-bottom: 28px;
+}
+
+.step-card-badge {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(91, 62, 245, 0.08);
+  border: 1.5px solid rgba(91, 62, 245, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.step-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.step-card-desc {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── Step navigation bar ── */
+.step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1.5px solid var(--border);
+}
+
+.step-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-next {
+  padding: 13px 26px;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(91, 62, 245, 0.3);
+}
+
+.btn-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(91, 62, 245, 0.45);
+}
+
+.btn-next span { position: relative; z-index: 1; }
+
+.btn-back-step {
+  padding: 11px 20px;
+  background: white;
+  color: var(--text2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-back-step:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-skip {
+  padding: 11px 18px;
+  background: transparent;
+  color: var(--text2);
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.btn-skip:hover {
+  color: var(--accent);
+}
+
+/* ── Role preview pills (Step 1) ── */
+.role-preview {
+  margin-bottom: 8px;
+}
+
+.role-preview-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.role-pill {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+.pill-required    { background: #fff0f0; color: var(--required); border: 1.5px solid #ffd0d0; }
+.pill-recommended { background: #f3f0ff; color: var(--recommended); border: 1.5px solid #ddd6fe; }
+.pill-nice        { background: #ecfdf5; color: var(--nice); border: 1.5px solid #a7f3d0; }
+.pill-total       { background: var(--surface2); color: var(--text2); border: 1.5px solid var(--border); }

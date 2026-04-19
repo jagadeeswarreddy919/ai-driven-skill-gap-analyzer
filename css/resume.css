@@ -1,0 +1,189 @@
+/* ─────────────────────────────────────
+   resume.css  –  Resume upload UI
+───────────────────────────────────── */
+
+/* ── Optional badge next to section title ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.optional-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: #f0eef8;
+  color: var(--text2);
+  border: 1.5px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ── Drop zone ── */
+.resume-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 20px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface2);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+
+.resume-upload-area:hover,
+.resume-upload-area.dragover {
+  border-color: var(--accent);
+  background: #ede9ff;
+}
+
+.resume-upload-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.resume-upload-text {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.resume-upload-sub {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.btn-upload {
+  padding: 8px 20px;
+  background: white;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 30px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-upload:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* ── Scanning state ── */
+.resume-scanning {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #ede9ff, #f5f0ff);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+
+.resume-scan-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(91, 62, 245, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+.resume-scan-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ── Result card ── */
+.resume-result {
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  border: 1.5px solid #34d399;
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+
+.resume-result-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.resume-result-icon {
+  font-size: 16px;
+}
+
+.resume-result-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #065f46;
+  flex: 1;
+}
+
+.btn-resume-clear {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-resume-clear:hover {
+  color: var(--required);
+  border-color: var(--required);
+}
+
+/* ── Detected skill tags ── */
+.resume-detected-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.detected-skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: white;
+  border: 1.5px solid #34d399;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #065f46;
+}
+
+.detected-skill-tag.unmatched {
+  border-color: var(--border);
+  color: var(--text2);
+  background: #f9fafb;
+}
+
+.detected-skill-tag .tag-check {
+  font-size: 10px;
+  color: #10b981;
+  font-weight: 700;
+}

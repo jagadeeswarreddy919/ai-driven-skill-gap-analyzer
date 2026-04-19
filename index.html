@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Skill Gap Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/steps.css" />
+  <link rel="stylesheet" href="css/form.css" />
+  <link rel="stylesheet" href="css/results.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+
+<body>
+
+  <button class="dark-toggle" id="darkToggle" title="Toggle dark mode">🌙</button>
+
+  <div class="wrapper">
+
+    <header>
+      <div class="logo">
+        <div class="logo-icon">🧠</div>
+        <h1>AI-Driven Skill Gap Analyzer</h1>
+      </div>
+      <p class="subtitle">Discover your skill gaps and get a personalized learning roadmap</p>
+    </header>
+
+    <!-- STEP INDICATOR -->
+    <div class="steps" id="steps">
+      <div class="step active" id="s1">
+        <div class="step-num">1</div>
+        <div class="step-label">Select Role</div>
+      </div>
+      <div class="step-line" id="l1"></div>
+      <div class="step" id="s2">
+        <div class="step-num">2</div>
+        <div class="step-label">Your Skills</div>
+      </div>
+      <div class="step-line" id="l2"></div>
+      <div class="step" id="s3">
+        <div class="step-num">3</div>
+        <div class="step-label">Report</div>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 1: SELECT ROLE ═══ -->
+    <div class="card step-card" id="card-step1">
+      <div class="step-card-header">
+        <div class="step-card-badge">Step 1 of 3</div>
+        <div class="step-card-title">Select Your Target Role</div>
+        <div class="step-card-desc">Choose a role — or paste a job description to auto-detect the best match.</div>
+      </div>
+
+      <!-- Mode tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tabRole" onclick="switchMode('role')">🎯 Select Role</button>
+        <button class="mode-tab" id="tabJD" onclick="switchMode('jd')">📋 Paste Job Description <span
+            class="wow-badge">WOW</span></button>
+      </div>
+
+      <!-- Role select mode -->
+      <div id="modeRole">
+        <div class="role-select-wrap">
+          <select id="roleSelect" onchange="onRoleChange()">
+            <option value="">Select Your Role</option>
+            <optgroup label="── Software / IT ──">
+              <option value="cybersecurity">Cybersecurity Analyst</option>
+              <option value="fullstack">Full-Stack Developer</option>
+              <option value="datascience">Data Scientist</option>
+              <option value="devops">DevOps Engineer</option>
+              <option value="product">Product Manager</option>
+              <option value="mleng">ML Engineer</option>
+              <option value="cloudarch">Cloud Architect</option>
+              <option value="uiux">UI/UX Designer</option>
+              <option value="blockchain">Blockchain Developer</option>
+              <option value="dataeng">Data Engineer</option>
+              <option value="mobile">Mobile Developer</option>
+              <option value="prompteng">AI Prompt Engineer</option>
+              <option value="backend">Backend Engineer</option>
+              <option value="qa">QA / Test Engineer</option>
+              <option value="scrum">Scrum Master / Agile Coach</option>
+              <option value="dataanalyst">Data Analyst</option>
+              <option value="techwriter">Technical Writer</option>
+            </optgroup>
+            <optgroup label="── ECE (Electronics & Communication) ──">
+              <option value="ece_embedded">Embedded Systems Engineer</option>
+              <option value="ece_vlsi">VLSI / Chip Design Engineer</option>
+              <option value="ece_rf">RF / Telecom Engineer</option>
+            </optgroup>
+            <optgroup label="── EEE (Electrical & Electronics) ──">
+              <option value="eee_design">Electrical Design Engineer</option>
+              <option value="eee_power">Power Electronics Engineer</option>
+              <option value="eee_automation">Automation & Instrumentation Engineer</option>
+            </optgroup>
+            <optgroup label="── Civil Engineering ──">
+              <option value="civil_structural">Structural Engineer</option>
+              <option value="civil_transport">Transportation / Highway Engineer</option>
+              <option value="civil_water">Water Resources Engineer</option>
+              <option value="civil_pm">Construction Project Manager</option>
+            </optgroup>
+            <optgroup label="── Mechanical Engineering ──">
+              <option value="mech_design">Mechanical Design Engineer</option>
+              <option value="mech_manufacturing">Manufacturing / Production Engineer</option>
+              <option value="mech_hvac">HVAC / Thermal Systems Engineer</option>
+              <option value="mech_auto">Automotive Engineer</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="role-preview" id="rolePreview"></div>
+        <div class="demo-banner">
+          <span>🎯 <strong>Demo Mode</strong> — Try instantly with a sample Junior Full-Stack profile</span>
+          <button class="btn-demo" onclick="loadDemo()">Load Demo</button>
+        </div>
+      </div>
+
+      <!-- JD paste mode -->
+      <div id="modeJD" style="display:none">
+        <div class="jd-paste-area">
+          <textarea id="jdInput"
+            placeholder="Paste the job description here…&#10;&#10;e.g. 'We are looking for a Full-Stack Developer with experience in React, Node.js, PostgreSQL, Docker and AWS. You will build REST APIs, collaborate with designers and deploy to production...'"
+            oninput="onJDInput()" rows="9"></textarea>
+          <div class="jd-hint" id="jdHint">Paste any job description — we'll extract skills and suggest the best
+            matching role.</div>
+        </div>
+        <div id="jdResults" style="display:none">
+          <div class="jd-match-card" id="jdMatchCard"></div>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <div></div>
+        <button class="btn-next" id="step1Next" onclick="goToStep(2)">
+          <span>Next: My Skills →</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 2: SKILLS ═══ -->
+    <div class="card step-card" id="card-step2" style="display:none">
+      <div class="step-card-header">
+        <div class="step-card-badge">Step 2 of 3</div>
+        <div class="step-card-title">Confirm Your Skills</div>
+        <div class="step-card-desc" id="skillsStepDesc">Check off all the skills you currently have.</div>
+      </div>
+      <div class="skills-search">
+        <input type="text" id="skillSearch" placeholder="Search skills…" oninput="filterSkills(this.value)" />
+      </div>
+      <div class="skills-toolbar">
+        <span id="skillsCount"></span>
+        <div style="display:flex;gap:12px;">
+          <button onclick="selectAllSkills()">Select All</button>
+          <button onclick="clearAllSkills()">Clear All</button>
+        </div>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+      <div class="step-nav">
+        <button class="btn-back-step" onclick="goToStep(1)">← Back</button>
+        <button class="btn-next" onclick="runAnalysis()"><span>✦ Analyze My Gap →</span></button>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="card loading" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">Analyzing your profile…</div>
+      <div class="loading-steps" id="loadingSteps"></div>
+    </div>
+
+    <!-- ═══ RESULTS (Step 3) ═══ -->
+    <div class="card results" id="results">
+      <div class="results-header">
+        <div class="results-title">Your Skill Gap Report</div>
+        <button class="btn-back" onclick="goBack()">← Start Over</button>
+      </div>
+      <div class="results-actions">
+        <button class="btn-action primary" onclick="window.print()">🖨️ Export PDF</button>
+        <button class="btn-action" onclick="copyShareLink()">🔗 Share</button>
+        <button class="btn-action" onclick="rerunAnalysis()">🔁 Re-run</button>
+      </div>
+
+      <!-- Score card -->
+      <div class="score-card" id="scoreCard"></div>
+
+      <!-- Career path -->
+      <div id="careerPathSection"></div>
+
+      <!-- Learning timeline -->
+      <div id="timelineSection"></div>
+
+      <!-- Gaps -->
+      <div class="gaps-title" id="gapsTitle">Skills to Develop</div>
+      <div id="gapsList"></div>
+
+      <!-- Feedback -->
+      <div class="feedback-bar" id="feedbackBar">
+        <span class="feedback-label">Was this analysis helpful?</span>
+        <button class="feedback-btn" id="fb-yes" onclick="submitFeedback('yes')">👍 Yes</button>
+        <button class="feedback-btn" id="fb-no" onclick="submitFeedback('no')">👎 No</button>
+        <span class="feedback-thanks" id="feedbackThanks" style="display:none">Thanks for your feedback! 🙏</span>
+      </div>
+    </div>
+
+  </div><!-- /wrapper -->
+
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
